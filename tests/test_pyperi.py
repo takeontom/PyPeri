@@ -77,3 +77,16 @@ def test_get_user_info():
     result = pp.get_user_info(user_id)
     assert result['id'] == user_id
     assert result['username'] == 'george_clinton'
+
+
+def test_parse_periscope_url():
+    pp = PyPeri()
+
+    broadcast_id = '1zqKVWybqeDGB'
+    w_url = 'https://www.periscope.tv/w/{broadcast_id}'.format(
+        broadcast_id=broadcast_id
+    )
+    w_result = pp.parse_periscope_url(w_url)
+    assert w_result['broadcast_id'] == broadcast_id
+    assert w_result['user_id'] is None
+    assert w_result['username'] is None
