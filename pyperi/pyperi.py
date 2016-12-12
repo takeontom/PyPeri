@@ -1,10 +1,12 @@
 import requests
 import urllib
 from collections import OrderedDict
+from re import match
 
 
 class PyPeri(object):
     PERISCOPE_API_BASE_URL = 'https://api.periscope.tv/api/v2/'
+    PERISCOPE_WEB_BASE_URL = 'https://www.periscope.tv/'
 
     def request_api(self, endpoint, **params):
         """
@@ -45,3 +47,28 @@ class PyPeri(object):
         endpoint = 'getUserPublic'
         result = self.request_api(endpoint, user_id=user_id)
         return result['user']
+
+    def parse_periscope_url(self, url):
+        """
+        Get any key information available from the supplied URL.
+
+        Will attempt to retrieve one, or combination of:
+
+        * broadcast_id
+        * user_id
+        * username
+        """
+        out = {
+            'broadcast_id': None,
+            'user_id': None,
+            'username': None,
+        }
+
+        w_url_pattern = '{base_url}w/([A-Za-z0-9]+)'.format(
+            base_url=PyPeri.PERISCOPE_WEB_BASE_URL
+        )
+        w_result = match(w_url_pattern, url)
+        if w_result:
+            out['broadcast_id'] = w_result.group(1)
+
+        return out
