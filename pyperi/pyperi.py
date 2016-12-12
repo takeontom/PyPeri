@@ -34,3 +34,6 @@ class PyPeri(object):
         """
         Retrieve a dict of information about a specific Broadcast.
         """
+        endpoint = 'accessVideoPublic'
+        result = self.request_api(endpoint, broadcast_id=broadcast_id)
+        return result['broadcast']
