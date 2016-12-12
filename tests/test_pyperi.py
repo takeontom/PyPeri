@@ -56,7 +56,24 @@ def test_get_broadcast_info():
     httpretty.register_uri(httpretty.GET, mock_url, mock_body)
 
     pp = PyPeri()
-    result = pp.get_broadcast_info('1zqKVWybqeDGB')
+    result = pp.get_broadcast_info(broadcast_id)
     assert result['id'] == broadcast_id
     assert result['user_id'] == '376827'
+    assert result['username'] == 'george_clinton'
+
+
+@httpretty.activate
+def test_get_user_info():
+    user_id = '376827'
+    mock_url = (
+        'https://api.periscope.tv/api/v2/getUserPublic?'
+        'user_id={user_id}'
+    ).format(user_id=user_id)
+    mock_body_file = open('tests/responses/getUserPublic.txt', 'r')
+    mock_body = mock_body_file.read()
+    httpretty.register_uri(httpretty.GET, mock_url, mock_body)
+
+    pp = PyPeri()
+    result = pp.get_user_info(user_id)
+    assert result['id'] == user_id
     assert result['username'] == 'george_clinton'

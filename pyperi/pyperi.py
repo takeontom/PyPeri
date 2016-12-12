@@ -37,3 +37,11 @@ class PyPeri(object):
         endpoint = 'accessVideoPublic'
         result = self.request_api(endpoint, broadcast_id=broadcast_id)
         return result['broadcast']
+
+    def get_user_info(self, user_id):
+        """
+        Retrieve a dict of information about a specific User.
+        """
+        endpoint = 'getUserPublic'
+        result = self.request_api(endpoint, user_id=user_id)
+        return result['user']
