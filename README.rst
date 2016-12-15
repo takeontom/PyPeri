@@ -2,16 +2,15 @@
 PyPeri
 ===============================
 
-
 .. image:: https://img.shields.io/pypi/v/pyperi.svg
-        :target: https://pypi.python.org/pypi/pyperi
+    :target: https://pypi.python.org/pypi/pyperi
 
 .. image:: https://img.shields.io/travis/takeontom/pyperi.svg
-        :target: https://travis-ci.org/takeontom/pyperi
+    :target: https://travis-ci.org/takeontom/pyperi
 
 .. image:: https://readthedocs.org/projects/pyperi/badge/?version=latest
-        :target: https://pyperi.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
+    :target: https://pyperi.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
 
 .. image:: https://pyup.io/repos/github/takeontom/pyperi/shield.svg
      :target: https://pyup.io/repos/github/takeontom/pyperi/
@@ -37,4 +36,3 @@ This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypack
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
-

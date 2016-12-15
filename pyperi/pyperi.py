@@ -19,7 +19,7 @@ class PyPeri(object):
 
     def create_api_request_url(self, endpoint, **params):
         """
-        Craft a URL to the Periscope API from the supplied endpoint and params.
+        Craft a URL to the Periscope API with the supplied endpoint and params.
         """
         # For easier testing, make sure all params are always in a consistent
         # order.
@@ -35,6 +35,8 @@ class PyPeri(object):
     def get_broadcast_info(self, broadcast_id):
         """
         Retrieve a dict of information about a specific Broadcast.
+
+        Uses Periscope's `accessVideoPublic` API endpoint.
         """
         endpoint = 'accessVideoPublic'
         result = self.request_api(endpoint, broadcast_id=broadcast_id)
@@ -43,6 +45,8 @@ class PyPeri(object):
     def get_user_info(self, user_id):
         """
         Retrieve a dict of information about a specific User.
+
+        Uses Periscope's `getUserPublic` API endpoint.
         """
         endpoint = 'getUserPublic'
         result = self.request_api(endpoint, user_id=user_id)
