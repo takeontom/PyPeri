@@ -19,8 +19,8 @@ Outputs::
 The API
 =======
 
-get_user_info(<user_id>)
-------------------------
+get_user_info(user_id)
+----------------------
 
 Retrieves a dictionary of information about the specified user.
 
@@ -58,8 +58,8 @@ Example usage::
      'twitter_screen_name': 'george_clinton',
      'username': 'george_clinton'}
 
-get_broadcast_info(<broadcast_id>)
-----------------------------------
+get_broadcast_info(broadcast_id)
+--------------------------------
 
 Retrieves a dictionary of information about the specified broadcast.
 
@@ -106,3 +106,24 @@ Example usage::
      'user_id': '376827',
      'username': 'george_clinton',
      'width': 320}
+
+
+parse_periscope_url(url)
+------------------------
+
+Attempts to extract the `broadcast_id`, `user_id`, `username` or a combination
+of these from the supplied URL.
+
+Supports the following URL formats:
+
+* https://www.periscope.tv/w/<broadcast_id>
+
+Example usage::
+
+    pp.parse_periscope_url('https://www.periscope.tv/w/1eaKbRMEMEQKX')
+
+    {
+        'broadcast_id': '1eaKbRMEMEQKX',
+        'user_id': None,
+        'username': None,
+    }
