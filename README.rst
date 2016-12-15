@@ -16,7 +16,7 @@ PyPeri
     :target: https://pyup.io/repos/github/takeontom/pyperi/
     :alt: Updates
 
- .. image:: https://badge.waffle.io/takeontom/PyPeri.svg?label=ready&title=Ready
+.. image:: https://badge.waffle.io/takeontom/PyPeri.svg?label=ready&title=Ready
     :target: https://waffle.io/takeontom/PyPeri
     :alt: 'Stories in Ready'
 
