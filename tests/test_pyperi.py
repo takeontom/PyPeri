@@ -12,7 +12,6 @@ import httpretty
 import pytest  # noqa
 
 from pyperi.pyperi import PyPeri
-from pprint import pprint
 
 
 @httpretty.activate
