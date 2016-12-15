@@ -4,21 +4,17 @@ PyPeri
 
 .. image:: https://img.shields.io/pypi/v/pyperi.svg
     :target: https://pypi.python.org/pypi/pyperi
-    :remote:
 
 .. image:: https://img.shields.io/travis/takeontom/pyperi.svg
     :target: https://travis-ci.org/takeontom/pyperi
-    :remote:
 
 .. image:: https://readthedocs.org/projects/pyperi/badge/?version=latest
     :target: https://pyperi.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
-    :remote:
 
 .. image:: https://pyup.io/repos/github/takeontom/pyperi/shield.svg
      :target: https://pyup.io/repos/github/takeontom/pyperi/
      :alt: Updates
-     :remote:
 
 
 Use Periscope with Python.
