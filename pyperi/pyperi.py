@@ -19,7 +19,7 @@ class PyPeri(object):
 
     def create_api_request_url(self, endpoint, **params):
         """
-        Craft a URL to the Periscope API from the supplied endpoint and params.
+        Craft a URL to the Periscope API with the supplied endpoint and params.
         """
         # For easier testing, make sure all params are always in a consistent
         # order.
