@@ -5,7 +5,7 @@ PyPeri
 .. image:: https://img.shields.io/pypi/v/pyperi.svg
     :target: https://pypi.python.org/pypi/pyperi
 
-.. image:: https://img.shields.io/travis/takeontom/pyperi.svg
+.. image:: https://img.shields.io/travis/takeontom/PyPeri.svg
     :target: https://travis-ci.org/takeontom/pyperi
 
 .. image:: https://readthedocs.org/projects/pyperi/badge/?version=latest
@@ -13,9 +13,12 @@ PyPeri
     :alt: Documentation Status
 
 .. image:: https://pyup.io/repos/github/takeontom/pyperi/shield.svg
-     :target: https://pyup.io/repos/github/takeontom/pyperi/
-     :alt: Updates
+    :target: https://pyup.io/repos/github/takeontom/pyperi/
+    :alt: Updates
 
+.. image:: https://badge.waffle.io/takeontom/PyPeri.svg?label=ready&title=Ready
+    :target: https://waffle.io/takeontom/PyPeri
+    :alt: 'Stories in Ready'
 
 Use Periscope with Python.
 
