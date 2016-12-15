@@ -7,14 +7,12 @@ Introduction
 
 To use PyPeri in a project::
 
-    from pyperi.pyperi import PyPeri
-    pp = PyPeri()
-    user_info = pp.get_user_info('376827')
-    print(user_info['username'])
-
-Outputs::
-
+    >>> from pyperi.pyperi import PyPeri
+    >>> pp = PyPeri()
+    >>> user_info = pp.get_user_info('376827')
+    >>> print(user_info['username'])
     george_clinton
+
 
 The API
 =======
@@ -28,8 +26,7 @@ Internally, this uses the `getUserPublic` Periscope API endpoint.
 
 Example usage::
 
-    pp.get_user_info('376827')
-
+    >>> pp.get_user_info('376827')
     {'class_name': 'User',
      'created_at': '2015-03-28T19:52:59.150319197-07:00',
      'description': "It's always gotten better by Thursday. www.georgeclinton.com",
@@ -68,8 +65,7 @@ Internally, this uses the `accessVideoPublic` Periscope API endpoint.
 
 Example usage::
 
-    pp.get_broadcast_info('1zqKVWybqeDGB')
-
+    >>> pp.get_broadcast_info('1zqKVWybqeDGB')
     {'available_for_replay': True,
      'camera_rotation': 271,
      'city': '',
@@ -121,13 +117,8 @@ Supports the following URL formats:
 
 Example usage::
 
-    pp.parse_periscope_url('https://www.periscope.tv/w/1eaKbRMEMEQKX')
-
-    {
-        'broadcast_id': '1eaKbRMEMEQKX',
-        'user_id': None,
-        'username': None,
-    }
+    >>> pp.parse_periscope_url('https://www.periscope.tv/w/1eaKbRMEMEQKX')
+    {'broadcast_id': '1eaKbRMEMEQKX', 'username': None, 'user_id': None}
 
 
 create_api_request_url(endpoint, **params)
@@ -139,11 +130,8 @@ The params will be added to URL in a consistent, alphabetical order.
 
 Example usage::
 
-    pp.create_api_request_url(
-        'getUserPublic', user_id='123456', example='param'
-    )
-
-    https://api.periscope.tv/api/v2/getUserPublic?example=param&user_id=123456
+    >>> pp.create_api_request_url('getUserPublic', user_id='123456', a='b')
+    'https://api.periscope.tv/api/v2/getUserPublic?a=b&user_id=123456'
 
 
 request_api(endpoint, **params)
@@ -154,8 +142,7 @@ the result as a Dict.
 
 Example usage::
 
-    pp.request_api('getUserPublic', user_id='376827')
-
+    >>> pp.request_api('getUserPublic', user_id='376827')
     {'class_name': 'User',
      'created_at': '2015-03-28T19:52:59.150319197-07:00',
      'description': "It's always gotten better by Thursday. www.georgeclinton.com",
