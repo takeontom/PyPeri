@@ -78,14 +78,69 @@ def test_get_user_info():
     assert result['username'] == 'george_clinton'
 
 
-def test_parse_periscope_url():
+def test_parse_periscope_url_w():
     pp = PyPeri()
+    broadcast_ids = [
+        '1zqKVWybqeDGB',
+    ]
 
-    broadcast_id = '1zqKVWybqeDGB'
-    w_url = 'https://www.periscope.tv/w/{broadcast_id}'.format(
-        broadcast_id=broadcast_id
-    )
-    w_result = pp.parse_periscope_url(w_url)
-    assert w_result['broadcast_id'] == broadcast_id
-    assert w_result['user_id'] is None
-    assert w_result['username'] is None
+    for broadcast_id in broadcast_ids:
+        w_url = 'https://www.periscope.tv/w/{broadcast_id}'.format(
+            broadcast_id=broadcast_id
+        )
+        assert pp.parse_periscope_url(w_url) == {
+            'broadcast_id': broadcast_id, 'user_id': None, 'username': None
+        }
+
+
+def test_parse_periscope_url_username():
+    pp = PyPeri()
+    usernames = [
+        'someusername',
+        'some_username',
+        'SomeUsername',
+    ]
+
+    for username in usernames:
+        username_url = 'https://www.periscope.tv/{username}'.format(
+            username=username
+        )
+        assert pp.parse_periscope_url(username_url) == {
+            'broadcast_id': None, 'user_id': None, 'username': username
+        }
+
+
+def test_parse_periscope_w_url():
+    pp = PyPeri()
+    broadcast_ids = [
+        '1zqKVWybqeDGB',
+    ]
+
+    for broadcast_id in broadcast_ids:
+        w_url = 'https://www.periscope.tv/w/{broadcast_id}'.format(
+            broadcast_id=broadcast_id
+        )
+        assert pp.parse_periscope_w_url(w_url) == {
+            'user_id': None,
+            'username': None,
+            'broadcast_id': broadcast_id,
+        }
+
+
+def test_parse_periscope_username_url():
+    pp = PyPeri()
+    usernames = [
+        'someusername',
+        'some_username',
+        'SomeUsername',
+    ]
+
+    for username in usernames:
+        username_url = 'https://www.periscope.tv/{username}'.format(
+            username=username
+        )
+        assert pp.parse_periscope_username_url(username_url) == {
+            'user_id': None,
+            'username': username,
+            'broadcast_id': None,
+        }
