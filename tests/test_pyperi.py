@@ -110,6 +110,30 @@ def test_parse_periscope_url_username():
         }
 
 
+def test_parse_periscope_url_username_broadcast_id():
+    pp = PyPeri()
+    usernames = [
+        'someusername',
+        'some_username',
+        'SomeUsername',
+    ]
+    broadcast_ids = [
+        '1zqKVWybqeDGB',
+    ]
+
+    for username in usernames:
+        for broadcast_id in broadcast_ids:
+            username_url = 'https://www.periscope.tv/{username}/{broadcast_id}'.format(
+                username=username,
+                broadcast_id=broadcast_id,
+            )
+            assert pp.parse_periscope_url(username_url) == {
+                'user_id': None,
+                'username': username,
+                'broadcast_id': broadcast_id,
+            }
+
+
 def test_parse_periscope_w_url():
     pp = PyPeri()
     broadcast_ids = [
@@ -144,3 +168,41 @@ def test_parse_periscope_username_url():
             'username': username,
             'broadcast_id': None,
         }
+
+
+def test_parse_periscope_username_broadcast_id_url():
+    pp = PyPeri()
+    usernames = [
+        'someusername',
+        'some_username',
+        'SomeUsername',
+    ]
+    broadcast_ids = [
+        '1zqKVWybqeDGB',
+    ]
+
+    for username in usernames:
+        for broadcast_id in broadcast_ids:
+            username_url = 'https://www.periscope.tv/{username}/{broadcast_id}'.format(
+                username=username,
+                broadcast_id=broadcast_id,
+            )
+            assert pp.parse_periscope_username_broadcast_id_url(username_url) == {
+                'user_id': None,
+                'username': username,
+                'broadcast_id': broadcast_id,
+            }
+
+    blank_result = {
+        'user_id': None,
+        'username': None,
+        'broadcast_id': None,
+    }
+
+    assert pp.parse_periscope_username_broadcast_id_url(
+        'https://www.periscope.tv/okUsername/'
+    ) == blank_result
+
+    assert pp.parse_periscope_username_broadcast_id_url(
+        'https://www.periscope.tv/okUsername/'
+    ) == blank_result

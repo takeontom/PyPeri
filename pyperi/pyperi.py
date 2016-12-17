@@ -65,6 +65,7 @@ class PyPeri(object):
 
         url_parsers = [
             self.parse_periscope_w_url,
+            self.parse_periscope_username_broadcast_id_url,
             self.parse_periscope_username_url,
         ]
 
@@ -127,8 +128,33 @@ class PyPeri(object):
         username_url_pattern = '{base_url}/([A-Za-z0-9_]+)'.format(
             base_url=PyPeri.PERISCOPE_WEB_BASE_URL
         )
-        username_url = match(username_url_pattern, url)
-        if username_url:
-            username = username_url.group(1)
+        username_result = match(username_url_pattern, url)
+        if username_result:
+            username = username_result.group(1)
             out['username'] = username
+        return out
+
+    def parse_periscope_username_broadcast_id_url(self, url):
+        """
+        Extract the `username`and `broadcast_id` from URLs formatted like this:
+
+            * https://www.periscope.tv/<username>/<broadcast_id>
+
+        Returns a dict of `username`, `broadcast_id` and `user_id` values.
+        """
+        out = {
+            'broadcast_id': None,
+            'user_id': None,
+            'username': None,
+        }
+
+        url_pattern = '{base_url}/([A-Za-z0-9_]+)/([A-Za-z0-9]+)'.format(
+            base_url=PyPeri.PERISCOPE_WEB_BASE_URL
+        )
+        result = match(url_pattern, url)
+        if result:
+            username = result.group(1)
+            broadcast_id = result.group(2)
+            out['username'] = username
+            out['broadcast_id'] = broadcast_id
         return out
