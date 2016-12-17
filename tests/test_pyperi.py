@@ -134,6 +134,23 @@ def test_parse_periscope_url_username_broadcast_id():
             }
 
 
+def test_parse_periscope_url_u():
+    pp = PyPeri()
+    user_ids = [
+        '376827',
+    ]
+
+    for user_id in user_ids:
+        url = 'https://www.periscope.tv/u/{user_id}'.format(
+            user_id=user_id
+        )
+        assert pp.parse_periscope_url(url) == {
+            'username': None,
+            'user_id': user_id,
+            'broadcast_id': None,
+        }
+
+
 def test_parse_periscope_w_url():
     pp = PyPeri()
     broadcast_ids = [
@@ -206,3 +223,20 @@ def test_parse_periscope_username_broadcast_id_url():
     assert pp.parse_periscope_username_broadcast_id_url(
         'https://www.periscope.tv/okUsername/'
     ) == blank_result
+
+
+def test_parse_periscope_u_url():
+    pp = PyPeri()
+    user_ids = [
+        '376827',
+    ]
+
+    for user_id in user_ids:
+        url = 'https://www.periscope.tv/u/{user_id}'.format(
+            user_id=user_id
+        )
+        assert pp.parse_periscope_u_url(url) == {
+            'username': None,
+            'user_id': user_id,
+            'broadcast_id': None,
+        }

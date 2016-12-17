@@ -65,6 +65,7 @@ class PyPeri(object):
 
         url_parsers = [
             self.parse_periscope_w_url,
+            self.parse_periscope_u_url,
             self.parse_periscope_username_broadcast_id_url,
             self.parse_periscope_username_url,
         ]
@@ -89,9 +90,6 @@ class PyPeri(object):
         "/w/" URLs look like this:
 
             * https://www.periscope.tv/w/<broadcast_id>
-
-        If a `broadcast_id` is not found in the supplied URL, or the URL
-        doesn't particularly look like a "/w/" URL, then will return `None`.
 
         Returns a dict of `username`, `broadcast_id` and `user_id` values.
         """
@@ -157,4 +155,30 @@ class PyPeri(object):
             broadcast_id = result.group(2)
             out['username'] = username
             out['broadcast_id'] = broadcast_id
+        return out
+
+    def parse_periscope_u_url(self, url):
+        """
+        Retrieve the `user_id` from the supplied "/u/" URL.
+
+        "/u/" URLs look like this:
+
+            * https://www.periscope.tv/u/<user_id>
+
+        Returns a dict of `username`, `broadcast_id` and `user_id` values.
+        """
+        out = {
+            'broadcast_id': None,
+            'user_id': None,
+            'username': None,
+        }
+
+        u_url_pattern = '{base_url}/u/([0-9]+)'.format(
+            base_url=PyPeri.PERISCOPE_WEB_BASE_URL
+        )
+
+        u_result = match(u_url_pattern, url)
+        if u_result:
+            broadcast_id = u_result.group(1)
+            out['user_id'] = broadcast_id
         return out
