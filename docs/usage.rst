@@ -114,6 +114,7 @@ of these from the supplied URL.
 Supports the following URL formats:
 
 * https://www.periscope.tv/w/<broadcast_id>
+* https://www.periscope.tv/<username>
 
 Example usage::
 
