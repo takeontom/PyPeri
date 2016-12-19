@@ -2,6 +2,8 @@ import requests
 import urllib
 from collections import OrderedDict
 from re import match
+from bs4 import BeautifulSoup
+import json
 
 
 class PyPeri(object):
@@ -51,6 +53,77 @@ class PyPeri(object):
         endpoint = 'getUserPublic'
         result = self.request_api(endpoint, user_id=user_id)
         return result['user']
+
+    def get_user_broadcast_history(self, user_id=None, username=None):
+        endpoint = 'getUserBroadcastsPublic'
+        session_tokens = self.get_web_public_user_session_tokens(
+            user_id, username
+        )
+        params = {
+            'user_id': session_tokens['user_id'],
+            'session_id': session_tokens['broadcastHistory'],
+            'all': 'true',
+        }
+        response = self.request_api(endpoint, **params)
+        return response['broadcasts']
+
+    def get_web_data_store(self, url):
+        """
+        Retrieve and return the 'data-store' HTML data attribute from the
+        given URL as a Dict.
+        """
+        r = requests.get(url)
+        r.raise_for_status()
+
+        soup = BeautifulSoup(r.content, 'html.parser')
+        page_container = soup.find(id='page-container')
+        data_store = json.loads(page_container['data-store'])
+        return data_store
+
+    def get_web_public_user_session_tokens(self, user_id=None, username=None):
+        """
+        Request new Public Session Tokens to access endpoints relating to a
+        specific user.
+
+        Returns a Dict containing Public Sesion Tokens for:
+
+            * broadcastHistory
+            * serviceToken
+            * thumbnailPlaylist
+
+        The returned Dict will also contain the requested User's 'user_id'.
+        """
+        user_url = self.create_user_url(user_id=user_id, username=username)
+
+        data_store = self.get_web_data_store(user_url)
+        public_tokens = data_store['SessionToken']['public']
+
+        token_names = [
+            'broadcastHistory', 'serviceToken', 'thumbnailPlaylist'
+        ]
+
+        out = {'user_id': data_store['Tracking']['userId']}
+        for token_name in token_names:
+            out[token_name] = public_tokens[token_name]['token']['session_id']
+
+        return out
+
+    def create_user_url(self, user_id=None, username=None):
+        """
+        Create the URL to a User's Periscope page.
+        """
+        if user_id:
+            return '{web_base_url}/u/{user_id}'.format(
+                web_base_url=PyPeri.PERISCOPE_WEB_BASE_URL,
+                user_id=user_id
+            )
+        elif username:
+            return '{web_base_url}/{username}'.format(
+                web_base_url=PyPeri.PERISCOPE_WEB_BASE_URL,
+                username=username
+            )
+
+        raise ValueError('Must specify either user_id or username')
 
     def parse_periscope_url(self, url):
         """

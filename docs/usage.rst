@@ -105,6 +105,242 @@ Example usage::
      'width': 320}
 
 
+get_user_broadcast_history(user_id=None, username=None)
+-------------------------------------------------------
+
+Attempt to retrieve the available broadcast history for the specified user.
+If all goes well, it will return a List containing Dicts of broadcast history.
+
+Example usage::
+
+    >>> pp.get_user_broadcast_history(username='george_clinton')
+    [
+        {'available_for_replay': True,
+        'camera_rotation': 0,
+        'city': 'Lake Hiawatha, NJ',
+        'class_name': 'Broadcast',
+        'country': 'United States',
+        'country_state': '',
+        'created_at': '2016-05-27T20:03:44.732179203-07:00',
+        'end': '2016-05-27T20:10:34.727278696-07:00',
+        'expiration': -1,
+        'featured': False,
+        'friend_chat': False,
+        'has_location': True,
+        'has_moderation': False,
+        'height': 568,
+        'id': '1YqGoOkLbLAGv',
+        'image_url': 'https://tn.periscope.tv/x4AraTkCeWbW6CyWIQXoYrer45aCkUJZML7TdClEUrPD62GMRa8RE4ztZpvt-3nBxp-eoZTZa9hEagUpQy9U9Q==/chunk_94.jpg?Expires=1779765037&Signature=X3idH7qrnCykvVYqlThNFa-z-i9g~mH7AUi8Lm5XdfuZwbV10GOh52xtGnfR5B45n4l0xSdz2Vz66rijM0QbimzPrUjyD09Gu72nNj2JPZzxOK3YZSjIZFDwzJLi71WO7L5I051k7mFwYj5l4~s2JmXr9TM5ZHiRkQTZ72sBYLIYJ6tmiWnWDAPE6wwcJ0ZIJfVqHyL8mRBGw5J4eFfbYe8JO7CkiDtNaQBI1H7n8BgzbnAqdU1J0k9kUErFdHgdi6gD-RAnPvhQOFmA2lTdVhha2LHRs4gCIR9GNSL9PLNzyYqBnaxtH2Jo4sZPNsymZhYgklF7GOc7YS7KhmSilg__&Key-Pair-Id=APKAIHCXHHQVRTVSFRWQ',
+        'image_url_small': 'https://tn.periscope.tv/x4AraTkCeWbW6CyWIQXoYrer45aCkUJZML7TdClEUrPD62GMRa8RE4ztZpvt-3nBxp-eoZTZa9hEagUpQy9U9Q==/chunk_94_thumb_128.jpg?Expires=1779765037&Signature=RwiKlnFJZrhkkZCSkNcJaaLlK~PwFEeCZH8Df-IoPt6FCxQZ-oVXGJzPMePl0Hm-4FxuzHyZDREBNlvnJof5qRPYR7TL9QPEtAstLDbidUqnXSKMNs-gLUqMv5P7VP~mAckViUW4nKv6kVxnX8XHuHFJkDbCGyX8c3lIkCUOt~Wk1nV0OzdHC72KJrwcR~9752EQYSBKJxATlcYM0gTEPLDk8CGDuGqWS211D7ATcnfJcNJ9a8NliNSFPQTXsa2ue5vaPPlWsjpLX8sQCJq-2SYbIHsDw7csmoPEMCYW-40jiSoLdSYbE4h9Xvjg0JupPrfjB9I6f3OfE8YrKVLJDQ__&Key-Pair-Id=APKAIHCXHHQVRTVSFRWQ',
+        'ip_lat': 40.862,
+        'ip_lng': -74.412,
+        'is_locked': False,
+        'iso_code': 'US',
+        'language': 'en',
+        'n_total_watched': 529,
+        'n_total_watching': 0,
+        'n_watching': 0,
+        'n_web_watching': 0,
+        'ping': '2016-05-27T20:10:29.619904440-07:00',
+        'profile_image_url': 'http://pbs.twimg.com/profile_images/482413674338869248/7GBlIsEm_reasonably_small.jpeg',
+        'start': '2016-05-27T20:04:44.636015867-07:00',
+        'state': 'ENDED',
+        'status': '#George Clinton',
+        'tags': ['George'],
+        'twitter_username': 'george_clinton',
+        'updated_at': '2016-05-27T20:10:37.315814298-07:00',
+        'user_display_name': 'George Clinton',
+        'user_id': '376827',
+        'username': 'george_clinton',
+        'width': 320},
+        {'available_for_replay': True,
+        'camera_rotation': 0,
+        'city': '',
+        'class_name': 'Broadcast',
+        'country': '',
+        'country_state': '',
+        'created_at': '2016-05-27T15:06:18.751291780-07:00',
+        'end': '2016-05-27T15:12:58.781942930-07:00',
+        'expiration': -1,
+        'featured': False,
+        'friend_chat': False,
+        'has_location': False,
+        'has_moderation': False,
+        'height': 568,
+        'id': '1nAKEnBDXXnGL',
+        'image_url': 'https://tn.periscope.tv/eurvYFivZmErfex_Bnj33ESp711ZJPTfUC_KDr5p7xfRuEl77eusMM59moAk00cBb7nI_U8orb95ivVVprgUkA==/chunk_96.jpg?Expires=1779747181&Signature=XWyaURZLs808ds7u-vhmhpcf8zHjkWF~6Jg9kwbdASu4Do7kUOjw11qNQodPfA3EtCFvE5ClN7Jvyt7lSzIArdp7VS5XlULPepu9YoIXBMRaB7RNeL7aIwNSrv3o3yw3ryZAoCyloG31H-hqOjLsFSQBXkfrmC-pQM~wgwsJp41wSQDx8HSGjkPzh7U1MOBc6Nvf4KCvHgpVhSHtmkkGRRsXjVVJLQ0qEpws0GjMYC-hRuzSdf8~9p4BwwPpAO79Cdl0w8haSKsxd9MI4F8JgdU1AtnyP575t7HZQH1wCk3b97U3F2fTm1ij0l-RX6Y8ivnDnUcXIoB7j3ZTvt1piA__&Key-Pair-Id=APKAIHCXHHQVRTVSFRWQ',
+        'image_url_small': 'https://tn.periscope.tv/eurvYFivZmErfex_Bnj33ESp711ZJPTfUC_KDr5p7xfRuEl77eusMM59moAk00cBb7nI_U8orb95ivVVprgUkA==/chunk_96_thumb_128.jpg?Expires=1779747181&Signature=a5KZMriA7-CoEYXCpHWU2j4TM~1WkZof-wpeQtDsgO9haZcUL0qQy5hiuPWcGOD3IiYCAegYfRzZtaAgO78qM0QkbKZl5vEZLenXHep16ZB4qQAiDXBayN2fIqWKpAIefTPpT-l11NZgs9JfWGOn4LZ2KDzGl7du1ZqwoViP56b1B2evPCAH0HSXgUhfvE4lcoBkunBwamK1amy8rDCTe-u9kI3vqV~bN500RxbfiKyYeZW8ukwjqtYMSilPFilmlv8znaBXNiRA4lsOG4XGJC0xuHQ46JD0Wp5T85gH-UH6Faqq0bh~aTOesVo~lRd9v0y6Uo3yIZGHK~vEz9McJw__&Key-Pair-Id=APKAIHCXHHQVRTVSFRWQ',
+        'ip_lat': 0,
+        'ip_lng': 0,
+        'is_locked': False,
+        'iso_code': '',
+        'language': 'en',
+        'n_total_watched': 1643,
+        'n_total_watching': 0,
+        'n_watching': 0,
+        'n_web_watching': 0,
+        'ping': '2016-05-27T15:12:48.828646925-07:00',
+        'profile_image_url': 'http://pbs.twimg.com/profile_images/482413674338869248/7GBlIsEm_reasonably_small.jpeg',
+        'start': '2016-05-27T15:06:52.018796186-07:00',
+        'state': 'ENDED',
+        'status': '#George Clinton talking with driver',
+        'tags': ['George'],
+        'twitter_username': 'george_clinton',
+        'updated_at': '2016-05-27T15:13:01.172799853-07:00',
+        'user_display_name': 'George Clinton',
+        'user_id': '376827',
+        'username': 'george_clinton',
+        'width': 320}
+    ]
+
+
+get_web_public_user_session_tokens(user_id=None, username=None)
+---------------------------------------------------------------
+
+Request Public Session Tokens from Periscope, which are required for accesing
+some endpoints of the Web API.
+
+User Session Tokens will provide you with access to endpoints for a specific
+Periscope User... they also expire after a few minutes, so it's recommended to
+request new Tokens for each request which requires them, rather than attempting
+to keep track of what Tokens you have, when they're about to expire, etc.
+
+Returns a Dict containing the following Service Tokens:
+
+* broadcastHistory
+* serviceToken
+* thumbnailPlaylist
+
+For convenience, it will also contain the User ID to which the tokens give
+access to.
+
+Example usage::
+
+    >>> pp.get_web_public_user_session_tokens(username='george_clinton')
+    {
+        'broadcastHistory': '17f710-p1JiBEUn0sEib_RdubMEIlN97QWGNF8BJ4eyajbdvMr4sIlwtDHQceV2yYnxSyCg4otO1Hf5eIRP7vzRKMnztRhTbW2WU6KBJ_R6vt9rSJ',
+        'serviceToken': '1-FeXtdwxPTDokFl0ZIoJVMN_9d2Pb5IdaaIx_XrX40fQWAm-nbT6ga0Kk_0_QJhWB7ZlqGuuT-Cl3BFu0okWRRenAAHi1NreE0FX2Q5AfMfT',
+        'thumbnailPlaylist': '1B4NxFGPCQH1IunHtK5cRWOkkbifgOK7Ipsx8uC9k_WfKC6m1AU6MpnC5cKzxivdnJHC4ngY0EespKKzOzSTn49woz56N9YIuyNkl3Ao977oeC-uvY_xrxXW5',
+        'user_id': '376827'
+    }
+
+
+
+get_web_data_store(url)
+-----------------------
+
+Data in the Web API is contained within the JSON found in the `data-store`
+HTML data attribute on a `<div id="page-container">`. The
+`get_web_data_store(url)` method grabs this data from the given URL and
+returns it as a Dict.
+
+This can be a useful tool during debugging and development.
+
+Example usage::
+
+    >>> pp.get_web_data_store('https://www.periscope.tv/george_clinton')
+    {'Auth': {'cookie': None, 'user': None},
+     'Blocked': {},
+     'Broadcast': {'error': {'isNotFound': False,
+                             'isServerError': False,
+                             'isUnavailable': False},
+                   'failed': [],
+                   'forceUpdate': False,
+                   'pending': []},
+     ...
+     'Replay': {'available': False,
+                'duration': 1,
+                'elapsed': 0,
+                'percentage': 0,
+                'replayAvailable': False,
+                'requestedPosition': None},
+     ...
+     'ServiceToken': {'channels': {'failed': False,
+                                   'pending': False,
+                                   'token': None},
+                      'safety': {'failed': False, 'pending': False, 'token': None}},
+     'SessionToken': {'authed': {'broadcastHistory': {'expiry': 1482031213812,
+                                                      'token': {'session_id': '1gJPr-JgpLDOA7UvVagJfGZ4_rUK6acqwXFLzkYW_MLAHJXABHtpcI8M_MhVHCtIkAjVLoETaQyeOSVGCujUOw1oVza00M78tOGiG'}},
+                                 'serviceToken': {'expiry': 1482031213812,
+                                                  'token': {'session_id': '1KQrcgw8pD_sWSG5q7xz2NX_T0uTiQsnQrG109M7k6wvH0xFaOfRrIejX8tcbz3WcyNduut19WBhUUW_EymQ7fwDY6Pj5IUYLKdrh'}},
+                                 'thumbnailPlaylist': {'expiry': 1482031213812,
+                                                       'token': {'session_id': '1sgxhozS2x3xlaHXOu6p7d8-SCAWeAdAQCRbaMnCSx3lx3R1QIdgdPWvXY4tx7X5yzPVb1va2HnPbVKYwyu75TyKBrUHephsMdZttl0bwpi9xogmE'}}},
+                      'public': {'broadcastHistory': {'expiry': 1482031213812,
+                                                      'token': {'session_id': '1ZRK3wcy1OwIkNSyfOYPW6cmC53DrI2o9W742xvH7H16jcOX8dPXaa74wYeGuk21N5wcsP7sffZmhRox8EE1Y9vkPYPS0QOqDO2jh3D3ujCoufkSv'}},
+                                 'serviceToken': {'expiry': 1482031213812,
+                                                  'token': {'session_id': '1xI6XnW-7lsGUIkDIqHJLobjwXtcwHqttcP4R4OhLyeezHTOTp3F5ay7oLym6lPOWa85-fElUN7kqfi2Lmz509aJIBCD1i7Um90kMBOKSxm8p'}},
+                                 'thumbnailPlaylist': {'expiry': 1482031213812,
+                                                       'token': {'session_id': '1FCYL0froR-yukXuob4fDX9D1BxZLsErK0dhr2RJrR-4uaPWMbJ08m9IbeMpy7GhCTWIhNhm9mgpuPVQJ6D252J4ynAV2MLAi9lgV7TqdAsbT9x_x1klILS-z'}}}},
+     'Tracking': {'type': 'periscope/USER_BROADCAST_HISTORY_REQUEST',
+                  'userId': '376827'},
+     'User': {'error': {},
+              'failed': [],
+              'failedFollowing': [],
+              'failedUnfollowing': [],
+              'pending': [],
+              'pendingFollowing': [],
+              'pendingUnfollowing': []},
+     'UserBroadcastHistory': {'broadcastIds': None,
+                              'error': None,
+                              'failed': [],
+                              'pending': []},
+     'UserBroadcastHistoryCache': {'histories': {}},
+     'VideoPlayer': {'appAvailable': False,
+                     'audio': 'OFF',
+                     'autoplay': False,
+                     'cinema': False,
+                     'dimensions': {'height': 0, 'width': 0},
+                     'includeVideoUI': False,
+                     'isAutoplay': False,
+                     'isCinemaPlayer': False,
+                     'isConnected': False,
+                     'isConnecting': False,
+                     'isExpectingVideo': False,
+                     'isInterstitialPresentation': True,
+                     'isLiveMode': False,
+                     'isLoadingVideo': False,
+                     'isPaused': False,
+                     'isPlayback': False,
+                     'isPlaying': False,
+                     'isReplayMode': False,
+                     'isStalled': False,
+                     'isStopped': True,
+                     'isStoppedInterstitial': True,
+                     'isUnknownMode': True,
+                     'isVideoPresentation': False,
+                     'muted': True,
+                     'orientation': 0,
+                     'playbackSupported': False,
+                     'playerBackgroundReady': False,
+                     'playerIsUnavailable': False,
+                     'playerMode': 'UNKNOWN',
+                     'playerState': 'STOPPED',
+                     'presentation': 'INTERSTITIAL',
+                     'requestedTimecode': -1,
+                     'timecodePresent': False,
+                     'unmuted': False,
+                     'videoHasStarted': False},
+     'routing': {}}
+
+The structure and actual data returned by this method will vary wildly
+depending on the requested URL.
+
+
+create_user_url(self, user_id=None, username=None)
+--------------------------------------------------
+
+Create a URL to the specified User's Periscope page. The generated URL will
+be different depending on whether the `user_id` or `username` was supplied.
+
+Example usage::
+
+    >>> pp.create_user_url(username='george_clinton')
+    'https://www.periscope.tv/w/1eaKbRMEMEQKX'
+
+    >>> pp.create_user_url(user_id='376827')
+    'https://www.periscope.tv/u/376827'
+
+
 parse_periscope_url(url)
 ------------------------
 

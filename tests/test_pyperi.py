@@ -78,6 +78,153 @@ def test_get_user_info():
     assert result['username'] == 'george_clinton'
 
 
+@httpretty.activate
+def test_get_user_broadcast_history__username():
+    user_url = ('https://www.periscope.tv/george_clinton')
+    mock_user_file = open('tests/responses/web_username.txt', 'r')
+    mock_user_body = mock_user_file.read()
+    httpretty.register_uri(httpretty.GET, user_url, mock_user_body)
+
+    url = (
+        'https://api.periscope.tv/api/v2/getUserBroadcastsPublic?'
+        'user_id={user_id}&all=true&session_id={session}'.format(
+            user_id='376827',
+            session=(
+                '103Aiku2x7oAhlnIYwnmpk6x1FHSedRbvP4SRo0cgjRgEHJ9ud2msVD3Pxcr'
+                'gZP7ox5_i18nfbfKzdKBTxrjMjJRTiQ8Um4t6LzFTgTZPADPhY_Mk'
+            )
+        )
+    )
+    mock_body_file = open('tests/responses/getUserBroadcastsPublic.txt', 'r')
+    mock_body = mock_body_file.read()
+    httpretty.register_uri(httpretty.GET, url, mock_body)
+
+    username = 'george_clinton'
+    pp = PyPeri()
+    broadcast_history = pp.get_user_broadcast_history(username=username)
+
+    assert broadcast_history[0]['id'] == '1vAxRdlLBdjGl'
+
+    common_keys = [
+        'start', 'ping', 'status', 'user_display_name', 'user_id', 'username',
+        'state', 'image_url', 'image_url_small',
+    ]
+    for broadcast in broadcast_history:
+        for key in common_keys:
+            assert key in broadcast.keys()
+
+
+@httpretty.activate
+def test_get_user_broadcast_history__user_id():
+    user_url = ('https://www.periscope.tv/u/376827')
+    mock_user_file = open('tests/responses/web_user_id.txt', 'r')
+    mock_user_body = mock_user_file.read()
+    httpretty.register_uri(httpretty.GET, user_url, mock_user_body)
+
+    url = (
+        'https://api.periscope.tv/api/v2/getUserBroadcastsPublic?'
+        'user_id={user_id}&all=true&session_id={session}'.format(
+            user_id='376827',
+            session=(
+                '103Aiku2x7oAhlnIYwnmpk6x1FHSedRbvP4SRo0cgjRgEHJ9ud2msVD3Pxcr'
+                'gZP7ox5_i18nfbfKzdKBTxrjMjJRTiQ8Um4t6LzFTgTZPADPhY_Mk'
+            )
+        )
+    )
+    mock_body_file = open('tests/responses/getUserBroadcastsPublic.txt', 'r')
+    mock_body = mock_body_file.read()
+    httpretty.register_uri(httpretty.GET, url, mock_body)
+
+    user_id = '376827'
+
+    broadcast_histories = []
+    pp = PyPeri()
+    broadcast_histories.append(pp.get_user_broadcast_history(user_id=user_id))
+    broadcast_histories.append(pp.get_user_broadcast_history(user_id))
+
+    for broadcast_history in broadcast_histories:
+        assert broadcast_history[0]['id'] == '1vAxRdlLBdjGl'
+
+        common_keys = [
+            'start', 'ping', 'status', 'user_display_name', 'user_id', 'username',
+            'state', 'image_url', 'image_url_small',
+        ]
+        for broadcast in broadcast_history:
+            for key in common_keys:
+                assert key in broadcast.keys()
+
+
+@httpretty.activate
+def test_get_web_data_store():
+    url = ('https://www.periscope.tv/george_clinton')
+    mock_body_file = open('tests/responses/web_username.txt', 'r')
+    mock_body = mock_body_file.read()
+    httpretty.register_uri(httpretty.GET, url, mock_body)
+
+    pp = PyPeri()
+    data_store = pp.get_web_data_store(url)
+
+    # Check useful session tokens are available
+    session_tokens = data_store['SessionToken']
+    public_session_tokens = session_tokens['public']
+    broadcast_history_session_token = public_session_tokens['broadcastHistory']
+    assert broadcast_history_session_token['token']['session_id'] == (
+        '103Aiku2x7oAhlnIYwnmpk6x1FHSedRbvP4SRo0cgjRgEHJ9ud2msVD3PxcrgZP7ox5_i'
+        '18nfbfKzdKBTxrjMjJRTiQ8Um4t6LzFTgTZPADPhY_Mk'
+    )
+
+    # Check we can get the user ID
+    assert data_store['Tracking']['userId'] == '376827'
+
+
+@httpretty.activate
+def test_get_web_public_user_session_tokens__username():
+    url = ('https://www.periscope.tv/george_clinton')
+    mock_body_file = open('tests/responses/web_username.txt', 'r')
+    mock_body = mock_body_file.read()
+    httpretty.register_uri(httpretty.GET, url, mock_body)
+
+    pp = PyPeri()
+    tokens = pp.get_web_public_user_session_tokens(username='george_clinton')
+    assert tokens['broadcastHistory'] == (
+        '103Aiku2x7oAhlnIYwnmpk6x1FHSedRbvP4SRo0cgjRgEHJ9ud2msVD3PxcrgZP7ox5_i'
+        '18nfbfKzdKBTxrjMjJRTiQ8Um4t6LzFTgTZPADPhY_Mk'
+    )
+    assert tokens['user_id'] == '376827'
+
+
+@httpretty.activate
+def test_get_web_public_user_session_tokens__user_id():
+    url = ('https://www.periscope.tv/u/376827')
+    mock_body_file = open('tests/responses/web_user_id.txt', 'r')
+    mock_body = mock_body_file.read()
+    httpretty.register_uri(httpretty.GET, url, mock_body)
+
+    pp = PyPeri()
+    tokens = pp.get_web_public_user_session_tokens(user_id='376827')
+    assert tokens['broadcastHistory'] == (
+        '1LPbupzBov6kqt2N79-0mX8OFzgkyz-yUga5-NnYbJX6ETrEuCBq427H4jVItOvgDkOaEuU5YqsUQ4vS3S6x40ZB'
+        'hpaXf0_U0a07g55PlwLAa5Jqz'
+    )
+    assert tokens['user_id'] == '376827'
+
+
+def test_create_user_url():
+    pp = PyPeri()
+
+    url = pp.create_user_url('376827')
+    assert url == 'https://www.periscope.tv/u/376827'
+
+    url = pp.create_user_url(user_id='376827')
+    assert url == 'https://www.periscope.tv/u/376827'
+
+    url = pp.create_user_url(username='george_clinton')
+    assert url == 'https://www.periscope.tv/george_clinton'
+
+    with pytest.raises(ValueError):
+        pp.create_user_url()
+
+
 def test_parse_periscope_url_w():
     pp = PyPeri()
     broadcast_ids = [
