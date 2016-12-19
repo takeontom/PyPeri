@@ -109,13 +109,89 @@ get_user_broadcast_history(user_id=None, username=None)
 -------------------------------------------------------
 
 Attempt to retrieve the available broadcast history for the specified user.
-If all goes well, it will return a Dict containing the same broadcast history
-as shown a user's Periscope profile.
+If all goes well, it will return a List containing Dicts of broadcast history.
 
 Example usage::
 
     >>> pp.get_user_broadcast_history(username='george_clinton')
-    {}
+    [
+        {'available_for_replay': True,
+        'camera_rotation': 0,
+        'city': 'Lake Hiawatha, NJ',
+        'class_name': 'Broadcast',
+        'country': 'United States',
+        'country_state': '',
+        'created_at': '2016-05-27T20:03:44.732179203-07:00',
+        'end': '2016-05-27T20:10:34.727278696-07:00',
+        'expiration': -1,
+        'featured': False,
+        'friend_chat': False,
+        'has_location': True,
+        'has_moderation': False,
+        'height': 568,
+        'id': '1YqGoOkLbLAGv',
+        'image_url': 'https://tn.periscope.tv/x4AraTkCeWbW6CyWIQXoYrer45aCkUJZML7TdClEUrPD62GMRa8RE4ztZpvt-3nBxp-eoZTZa9hEagUpQy9U9Q==/chunk_94.jpg?Expires=1779765037&Signature=X3idH7qrnCykvVYqlThNFa-z-i9g~mH7AUi8Lm5XdfuZwbV10GOh52xtGnfR5B45n4l0xSdz2Vz66rijM0QbimzPrUjyD09Gu72nNj2JPZzxOK3YZSjIZFDwzJLi71WO7L5I051k7mFwYj5l4~s2JmXr9TM5ZHiRkQTZ72sBYLIYJ6tmiWnWDAPE6wwcJ0ZIJfVqHyL8mRBGw5J4eFfbYe8JO7CkiDtNaQBI1H7n8BgzbnAqdU1J0k9kUErFdHgdi6gD-RAnPvhQOFmA2lTdVhha2LHRs4gCIR9GNSL9PLNzyYqBnaxtH2Jo4sZPNsymZhYgklF7GOc7YS7KhmSilg__&Key-Pair-Id=APKAIHCXHHQVRTVSFRWQ',
+        'image_url_small': 'https://tn.periscope.tv/x4AraTkCeWbW6CyWIQXoYrer45aCkUJZML7TdClEUrPD62GMRa8RE4ztZpvt-3nBxp-eoZTZa9hEagUpQy9U9Q==/chunk_94_thumb_128.jpg?Expires=1779765037&Signature=RwiKlnFJZrhkkZCSkNcJaaLlK~PwFEeCZH8Df-IoPt6FCxQZ-oVXGJzPMePl0Hm-4FxuzHyZDREBNlvnJof5qRPYR7TL9QPEtAstLDbidUqnXSKMNs-gLUqMv5P7VP~mAckViUW4nKv6kVxnX8XHuHFJkDbCGyX8c3lIkCUOt~Wk1nV0OzdHC72KJrwcR~9752EQYSBKJxATlcYM0gTEPLDk8CGDuGqWS211D7ATcnfJcNJ9a8NliNSFPQTXsa2ue5vaPPlWsjpLX8sQCJq-2SYbIHsDw7csmoPEMCYW-40jiSoLdSYbE4h9Xvjg0JupPrfjB9I6f3OfE8YrKVLJDQ__&Key-Pair-Id=APKAIHCXHHQVRTVSFRWQ',
+        'ip_lat': 40.862,
+        'ip_lng': -74.412,
+        'is_locked': False,
+        'iso_code': 'US',
+        'language': 'en',
+        'n_total_watched': 529,
+        'n_total_watching': 0,
+        'n_watching': 0,
+        'n_web_watching': 0,
+        'ping': '2016-05-27T20:10:29.619904440-07:00',
+        'profile_image_url': 'http://pbs.twimg.com/profile_images/482413674338869248/7GBlIsEm_reasonably_small.jpeg',
+        'start': '2016-05-27T20:04:44.636015867-07:00',
+        'state': 'ENDED',
+        'status': '#George Clinton',
+        'tags': ['George'],
+        'twitter_username': 'george_clinton',
+        'updated_at': '2016-05-27T20:10:37.315814298-07:00',
+        'user_display_name': 'George Clinton',
+        'user_id': '376827',
+        'username': 'george_clinton',
+        'width': 320},
+        {'available_for_replay': True,
+        'camera_rotation': 0,
+        'city': '',
+        'class_name': 'Broadcast',
+        'country': '',
+        'country_state': '',
+        'created_at': '2016-05-27T15:06:18.751291780-07:00',
+        'end': '2016-05-27T15:12:58.781942930-07:00',
+        'expiration': -1,
+        'featured': False,
+        'friend_chat': False,
+        'has_location': False,
+        'has_moderation': False,
+        'height': 568,
+        'id': '1nAKEnBDXXnGL',
+        'image_url': 'https://tn.periscope.tv/eurvYFivZmErfex_Bnj33ESp711ZJPTfUC_KDr5p7xfRuEl77eusMM59moAk00cBb7nI_U8orb95ivVVprgUkA==/chunk_96.jpg?Expires=1779747181&Signature=XWyaURZLs808ds7u-vhmhpcf8zHjkWF~6Jg9kwbdASu4Do7kUOjw11qNQodPfA3EtCFvE5ClN7Jvyt7lSzIArdp7VS5XlULPepu9YoIXBMRaB7RNeL7aIwNSrv3o3yw3ryZAoCyloG31H-hqOjLsFSQBXkfrmC-pQM~wgwsJp41wSQDx8HSGjkPzh7U1MOBc6Nvf4KCvHgpVhSHtmkkGRRsXjVVJLQ0qEpws0GjMYC-hRuzSdf8~9p4BwwPpAO79Cdl0w8haSKsxd9MI4F8JgdU1AtnyP575t7HZQH1wCk3b97U3F2fTm1ij0l-RX6Y8ivnDnUcXIoB7j3ZTvt1piA__&Key-Pair-Id=APKAIHCXHHQVRTVSFRWQ',
+        'image_url_small': 'https://tn.periscope.tv/eurvYFivZmErfex_Bnj33ESp711ZJPTfUC_KDr5p7xfRuEl77eusMM59moAk00cBb7nI_U8orb95ivVVprgUkA==/chunk_96_thumb_128.jpg?Expires=1779747181&Signature=a5KZMriA7-CoEYXCpHWU2j4TM~1WkZof-wpeQtDsgO9haZcUL0qQy5hiuPWcGOD3IiYCAegYfRzZtaAgO78qM0QkbKZl5vEZLenXHep16ZB4qQAiDXBayN2fIqWKpAIefTPpT-l11NZgs9JfWGOn4LZ2KDzGl7du1ZqwoViP56b1B2evPCAH0HSXgUhfvE4lcoBkunBwamK1amy8rDCTe-u9kI3vqV~bN500RxbfiKyYeZW8ukwjqtYMSilPFilmlv8znaBXNiRA4lsOG4XGJC0xuHQ46JD0Wp5T85gH-UH6Faqq0bh~aTOesVo~lRd9v0y6Uo3yIZGHK~vEz9McJw__&Key-Pair-Id=APKAIHCXHHQVRTVSFRWQ',
+        'ip_lat': 0,
+        'ip_lng': 0,
+        'is_locked': False,
+        'iso_code': '',
+        'language': 'en',
+        'n_total_watched': 1643,
+        'n_total_watching': 0,
+        'n_watching': 0,
+        'n_web_watching': 0,
+        'ping': '2016-05-27T15:12:48.828646925-07:00',
+        'profile_image_url': 'http://pbs.twimg.com/profile_images/482413674338869248/7GBlIsEm_reasonably_small.jpeg',
+        'start': '2016-05-27T15:06:52.018796186-07:00',
+        'state': 'ENDED',
+        'status': '#George Clinton talking with driver',
+        'tags': ['George'],
+        'twitter_username': 'george_clinton',
+        'updated_at': '2016-05-27T15:13:01.172799853-07:00',
+        'user_display_name': 'George Clinton',
+        'user_id': '376827',
+        'username': 'george_clinton',
+        'width': 320}
+    ]
 
 
 get_web_public_user_session_tokens(user_id=None, username=None)
@@ -135,10 +211,19 @@ Returns a Dict containing the following Service Tokens:
 * serviceToken
 * thumbnailPlaylist
 
+For convenience, it will also contain the User ID to which the tokens give
+access to.
+
 Example usage::
 
     >>> pp.get_web_public_user_session_tokens(username='george_clinton')
-    {}
+    {
+        'broadcastHistory': '17f710-p1JiBEUn0sEib_RdubMEIlN97QWGNF8BJ4eyajbdvMr4sIlwtDHQceV2yYnxSyCg4otO1Hf5eIRP7vzRKMnztRhTbW2WU6KBJ_R6vt9rSJ',
+        'serviceToken': '1-FeXtdwxPTDokFl0ZIoJVMN_9d2Pb5IdaaIx_XrX40fQWAm-nbT6ga0Kk_0_QJhWB7ZlqGuuT-Cl3BFu0okWRRenAAHi1NreE0FX2Q5AfMfT',
+        'thumbnailPlaylist': '1B4NxFGPCQH1IunHtK5cRWOkkbifgOK7Ipsx8uC9k_WfKC6m1AU6MpnC5cKzxivdnJHC4ngY0EespKKzOzSTn49woz56N9YIuyNkl3Ao977oeC-uvY_xrxXW5',
+        'user_id': '376827'
+    }
+
 
 
 get_web_data_store(url)
