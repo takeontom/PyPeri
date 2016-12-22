@@ -7,8 +7,8 @@ Introduction
 
 To use PyPeri in a project::
 
-    >>> from pyperi.pyperi import PyPeri
-    >>> pp = PyPeri()
+    >>> from pyperi.pyperi import Peri
+    >>> pp = Peri()
     >>> user_info = pp.get_user_info('376827')
     >>> print(user_info['username'])
     george_clinton

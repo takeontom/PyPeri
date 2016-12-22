@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import json
 
 
-class PyPeri(object):
+class Peri(object):
     PERISCOPE_API_BASE_URL = 'https://api.periscope.tv/api/v2'
     PERISCOPE_WEB_BASE_URL = 'https://www.periscope.tv'
 
@@ -28,7 +28,7 @@ class PyPeri(object):
         params_ordered = OrderedDict(sorted(params.items()))
 
         url = '{base_url}/{endpoint}?{params}'.format(
-            base_url=PyPeri.PERISCOPE_API_BASE_URL,
+            base_url=Peri.PERISCOPE_API_BASE_URL,
             endpoint=endpoint,
             params=urllib.parse.urlencode(params_ordered),
         )
@@ -114,12 +114,12 @@ class PyPeri(object):
         """
         if user_id:
             return '{web_base_url}/u/{user_id}'.format(
-                web_base_url=PyPeri.PERISCOPE_WEB_BASE_URL,
+                web_base_url=Peri.PERISCOPE_WEB_BASE_URL,
                 user_id=user_id
             )
         elif username:
             return '{web_base_url}/{username}'.format(
-                web_base_url=PyPeri.PERISCOPE_WEB_BASE_URL,
+                web_base_url=Peri.PERISCOPE_WEB_BASE_URL,
                 username=username
             )
 
@@ -173,7 +173,7 @@ class PyPeri(object):
         }
 
         w_url_pattern = '{base_url}/w/([A-Za-z0-9]+)'.format(
-            base_url=PyPeri.PERISCOPE_WEB_BASE_URL
+            base_url=Peri.PERISCOPE_WEB_BASE_URL
         )
 
         w_result = match(w_url_pattern, url)
@@ -197,7 +197,7 @@ class PyPeri(object):
         }
 
         username_url_pattern = '{base_url}/([A-Za-z0-9_]+)'.format(
-            base_url=PyPeri.PERISCOPE_WEB_BASE_URL
+            base_url=Peri.PERISCOPE_WEB_BASE_URL
         )
         username_result = match(username_url_pattern, url)
         if username_result:
@@ -220,7 +220,7 @@ class PyPeri(object):
         }
 
         url_pattern = '{base_url}/([A-Za-z0-9_]+)/([A-Za-z0-9]+)'.format(
-            base_url=PyPeri.PERISCOPE_WEB_BASE_URL
+            base_url=Peri.PERISCOPE_WEB_BASE_URL
         )
         result = match(url_pattern, url)
         if result:
@@ -247,7 +247,7 @@ class PyPeri(object):
         }
 
         u_url_pattern = '{base_url}/u/([0-9]+)'.format(
-            base_url=PyPeri.PERISCOPE_WEB_BASE_URL
+            base_url=Peri.PERISCOPE_WEB_BASE_URL
         )
 
         u_result = match(u_url_pattern, url)
