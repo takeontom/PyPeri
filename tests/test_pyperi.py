@@ -11,7 +11,7 @@ Tests for `pyperi` module.
 import httpretty
 import pytest  # noqa
 
-from pyperi.pyperi import Peri
+from pyperi import Peri
 
 
 @httpretty.activate
