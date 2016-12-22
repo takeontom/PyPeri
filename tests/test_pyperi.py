@@ -11,7 +11,7 @@ Tests for `pyperi` module.
 import httpretty
 import pytest  # noqa
 
-from pyperi.pyperi import PyPeri
+from pyperi.pyperi import Peri
 
 
 @httpretty.activate
@@ -22,7 +22,7 @@ def test_request_api():
     )
     mock_body = '{"test":"ok"}'
     httpretty.register_uri(httpretty.GET, mock_url, mock_body)
-    pp = PyPeri()
+    pp = Peri()
     result = pp.request_api(
         'testEndpoint', test_param='something', test_param2='else'
     )
@@ -30,7 +30,7 @@ def test_request_api():
 
 
 def test_create_api_request_url():
-    pp = PyPeri()
+    pp = Peri()
     url = pp.create_api_request_url(
         'testEndpoint', test_param='something', test_param2='else'
     )
@@ -54,7 +54,7 @@ def test_get_broadcast_info():
     mock_body = mock_body_file.read()
     httpretty.register_uri(httpretty.GET, mock_url, mock_body)
 
-    pp = PyPeri()
+    pp = Peri()
     result = pp.get_broadcast_info(broadcast_id)
     assert result['id'] == broadcast_id
     assert result['user_id'] == '376827'
@@ -72,7 +72,7 @@ def test_get_user_info():
     mock_body = mock_body_file.read()
     httpretty.register_uri(httpretty.GET, mock_url, mock_body)
 
-    pp = PyPeri()
+    pp = Peri()
     result = pp.get_user_info(user_id)
     assert result['id'] == user_id
     assert result['username'] == 'george_clinton'
@@ -100,7 +100,7 @@ def test_get_user_broadcast_history__username():
     httpretty.register_uri(httpretty.GET, url, mock_body)
 
     username = 'george_clinton'
-    pp = PyPeri()
+    pp = Peri()
     broadcast_history = pp.get_user_broadcast_history(username=username)
 
     assert broadcast_history[0]['id'] == '1vAxRdlLBdjGl'
@@ -138,7 +138,7 @@ def test_get_user_broadcast_history__user_id():
     user_id = '376827'
 
     broadcast_histories = []
-    pp = PyPeri()
+    pp = Peri()
     broadcast_histories.append(pp.get_user_broadcast_history(user_id=user_id))
     broadcast_histories.append(pp.get_user_broadcast_history(user_id))
 
@@ -161,7 +161,7 @@ def test_get_web_data_store():
     mock_body = mock_body_file.read()
     httpretty.register_uri(httpretty.GET, url, mock_body)
 
-    pp = PyPeri()
+    pp = Peri()
     data_store = pp.get_web_data_store(url)
 
     # Check useful session tokens are available
@@ -184,7 +184,7 @@ def test_get_web_public_user_session_tokens__username():
     mock_body = mock_body_file.read()
     httpretty.register_uri(httpretty.GET, url, mock_body)
 
-    pp = PyPeri()
+    pp = Peri()
     tokens = pp.get_web_public_user_session_tokens(username='george_clinton')
     assert tokens['broadcastHistory'] == (
         '103Aiku2x7oAhlnIYwnmpk6x1FHSedRbvP4SRo0cgjRgEHJ9ud2msVD3PxcrgZP7ox5_i'
@@ -200,7 +200,7 @@ def test_get_web_public_user_session_tokens__user_id():
     mock_body = mock_body_file.read()
     httpretty.register_uri(httpretty.GET, url, mock_body)
 
-    pp = PyPeri()
+    pp = Peri()
     tokens = pp.get_web_public_user_session_tokens(user_id='376827')
     assert tokens['broadcastHistory'] == (
         '1LPbupzBov6kqt2N79-0mX8OFzgkyz-yUga5-NnYbJX6ETrEuCBq427H4jVItOvgDkOaEuU5YqsUQ4vS3S6x40ZB'
@@ -210,7 +210,7 @@ def test_get_web_public_user_session_tokens__user_id():
 
 
 def test_create_user_url():
-    pp = PyPeri()
+    pp = Peri()
 
     url = pp.create_user_url('376827')
     assert url == 'https://www.periscope.tv/u/376827'
@@ -226,7 +226,7 @@ def test_create_user_url():
 
 
 def test_parse_periscope_url_w():
-    pp = PyPeri()
+    pp = Peri()
     broadcast_ids = [
         '1zqKVWybqeDGB',
     ]
@@ -241,7 +241,7 @@ def test_parse_periscope_url_w():
 
 
 def test_parse_periscope_url_username():
-    pp = PyPeri()
+    pp = Peri()
     usernames = [
         'someusername',
         'some_username',
@@ -258,7 +258,7 @@ def test_parse_periscope_url_username():
 
 
 def test_parse_periscope_url_username_broadcast_id():
-    pp = PyPeri()
+    pp = Peri()
     usernames = [
         'someusername',
         'some_username',
@@ -282,7 +282,7 @@ def test_parse_periscope_url_username_broadcast_id():
 
 
 def test_parse_periscope_url_u():
-    pp = PyPeri()
+    pp = Peri()
     user_ids = [
         '376827',
     ]
@@ -299,7 +299,7 @@ def test_parse_periscope_url_u():
 
 
 def test_parse_periscope_w_url():
-    pp = PyPeri()
+    pp = Peri()
     broadcast_ids = [
         '1zqKVWybqeDGB',
     ]
@@ -316,7 +316,7 @@ def test_parse_periscope_w_url():
 
 
 def test_parse_periscope_username_url():
-    pp = PyPeri()
+    pp = Peri()
     usernames = [
         'someusername',
         'some_username',
@@ -335,7 +335,7 @@ def test_parse_periscope_username_url():
 
 
 def test_parse_periscope_username_broadcast_id_url():
-    pp = PyPeri()
+    pp = Peri()
     usernames = [
         'someusername',
         'some_username',
@@ -373,7 +373,7 @@ def test_parse_periscope_username_broadcast_id_url():
 
 
 def test_parse_periscope_u_url():
-    pp = PyPeri()
+    pp = Peri()
     user_ids = [
         '376827',
     ]
