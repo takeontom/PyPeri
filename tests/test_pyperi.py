@@ -31,7 +31,7 @@ def test_request_api():
 
 def test_create_api_request_url():
     pp = Peri()
-    url = pp.create_api_request_url(
+    url = pp._create_api_request_url(
         'testEndpoint', test_param='something', test_param2='else'
     )
     assert url == (
@@ -39,7 +39,7 @@ def test_create_api_request_url():
         'test_param=something&test_param2=else'
     )
 
-    url_no_params = pp.create_api_request_url('testEndpoint')
+    url_no_params = pp._create_api_request_url('testEndpoint')
     assert url_no_params == 'https://api.periscope.tv/api/v2/testEndpoint?'
 
 
@@ -162,7 +162,7 @@ def test_get_web_data_store():
     httpretty.register_uri(httpretty.GET, url, mock_body)
 
     pp = Peri()
-    data_store = pp.get_web_data_store(url)
+    data_store = pp._get_web_data_store(url)
 
     # Check useful session tokens are available
     session_tokens = data_store['SessionToken']
@@ -308,7 +308,7 @@ def test_parse_periscope_w_url():
         w_url = 'https://www.periscope.tv/w/{broadcast_id}'.format(
             broadcast_id=broadcast_id
         )
-        assert pp.parse_periscope_w_url(w_url) == {
+        assert pp._parse_periscope_w_url(w_url) == {
             'user_id': None,
             'username': None,
             'broadcast_id': broadcast_id,
@@ -327,7 +327,7 @@ def test_parse_periscope_username_url():
         username_url = 'https://www.periscope.tv/{username}'.format(
             username=username
         )
-        assert pp.parse_periscope_username_url(username_url) == {
+        assert pp._parse_periscope_username_url(username_url) == {
             'user_id': None,
             'username': username,
             'broadcast_id': None,
@@ -351,7 +351,7 @@ def test_parse_periscope_username_broadcast_id_url():
                 username=username,
                 broadcast_id=broadcast_id,
             )
-            assert pp.parse_periscope_username_broadcast_id_url(username_url) == {
+            assert pp._parse_periscope_username_broadcast_id_url(username_url) == {
                 'user_id': None,
                 'username': username,
                 'broadcast_id': broadcast_id,
@@ -363,11 +363,11 @@ def test_parse_periscope_username_broadcast_id_url():
         'broadcast_id': None,
     }
 
-    assert pp.parse_periscope_username_broadcast_id_url(
+    assert pp._parse_periscope_username_broadcast_id_url(
         'https://www.periscope.tv/okUsername/'
     ) == blank_result
 
-    assert pp.parse_periscope_username_broadcast_id_url(
+    assert pp._parse_periscope_username_broadcast_id_url(
         'https://www.periscope.tv/okUsername/'
     ) == blank_result
 
@@ -382,7 +382,7 @@ def test_parse_periscope_u_url():
         url = 'https://www.periscope.tv/u/{user_id}'.format(
             user_id=user_id
         )
-        assert pp.parse_periscope_u_url(url) == {
+        assert pp._parse_periscope_u_url(url) == {
             'username': None,
             'user_id': user_id,
             'broadcast_id': None,

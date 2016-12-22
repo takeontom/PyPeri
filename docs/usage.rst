@@ -10,7 +10,6 @@ To use PyPeri in a project::
     >>> from pyperi import Peri
     >>> pp = Peri()
     >>> user_info = pp.get_user_info('376827')
-    >>> print(user_info['username'])
     george_clinton
 
 
@@ -225,107 +224,6 @@ Example usage::
     }
 
 
-
-get_web_data_store(url)
------------------------
-
-Data in the Web API is contained within the JSON found in the `data-store`
-HTML data attribute on a `<div id="page-container">`. The
-`get_web_data_store(url)` method grabs this data from the given URL and
-returns it as a Dict.
-
-This can be a useful tool during debugging and development.
-
-Example usage::
-
-    >>> pp.get_web_data_store('https://www.periscope.tv/george_clinton')
-    {'Auth': {'cookie': None, 'user': None},
-     'Blocked': {},
-     'Broadcast': {'error': {'isNotFound': False,
-                             'isServerError': False,
-                             'isUnavailable': False},
-                   'failed': [],
-                   'forceUpdate': False,
-                   'pending': []},
-     ...
-     'Replay': {'available': False,
-                'duration': 1,
-                'elapsed': 0,
-                'percentage': 0,
-                'replayAvailable': False,
-                'requestedPosition': None},
-     ...
-     'ServiceToken': {'channels': {'failed': False,
-                                   'pending': False,
-                                   'token': None},
-                      'safety': {'failed': False, 'pending': False, 'token': None}},
-     'SessionToken': {'authed': {'broadcastHistory': {'expiry': 1482031213812,
-                                                      'token': {'session_id': '1gJPr-JgpLDOA7UvVagJfGZ4_rUK6acqwXFLzkYW_MLAHJXABHtpcI8M_MhVHCtIkAjVLoETaQyeOSVGCujUOw1oVza00M78tOGiG'}},
-                                 'serviceToken': {'expiry': 1482031213812,
-                                                  'token': {'session_id': '1KQrcgw8pD_sWSG5q7xz2NX_T0uTiQsnQrG109M7k6wvH0xFaOfRrIejX8tcbz3WcyNduut19WBhUUW_EymQ7fwDY6Pj5IUYLKdrh'}},
-                                 'thumbnailPlaylist': {'expiry': 1482031213812,
-                                                       'token': {'session_id': '1sgxhozS2x3xlaHXOu6p7d8-SCAWeAdAQCRbaMnCSx3lx3R1QIdgdPWvXY4tx7X5yzPVb1va2HnPbVKYwyu75TyKBrUHephsMdZttl0bwpi9xogmE'}}},
-                      'public': {'broadcastHistory': {'expiry': 1482031213812,
-                                                      'token': {'session_id': '1ZRK3wcy1OwIkNSyfOYPW6cmC53DrI2o9W742xvH7H16jcOX8dPXaa74wYeGuk21N5wcsP7sffZmhRox8EE1Y9vkPYPS0QOqDO2jh3D3ujCoufkSv'}},
-                                 'serviceToken': {'expiry': 1482031213812,
-                                                  'token': {'session_id': '1xI6XnW-7lsGUIkDIqHJLobjwXtcwHqttcP4R4OhLyeezHTOTp3F5ay7oLym6lPOWa85-fElUN7kqfi2Lmz509aJIBCD1i7Um90kMBOKSxm8p'}},
-                                 'thumbnailPlaylist': {'expiry': 1482031213812,
-                                                       'token': {'session_id': '1FCYL0froR-yukXuob4fDX9D1BxZLsErK0dhr2RJrR-4uaPWMbJ08m9IbeMpy7GhCTWIhNhm9mgpuPVQJ6D252J4ynAV2MLAi9lgV7TqdAsbT9x_x1klILS-z'}}}},
-     'Tracking': {'type': 'periscope/USER_BROADCAST_HISTORY_REQUEST',
-                  'userId': '376827'},
-     'User': {'error': {},
-              'failed': [],
-              'failedFollowing': [],
-              'failedUnfollowing': [],
-              'pending': [],
-              'pendingFollowing': [],
-              'pendingUnfollowing': []},
-     'UserBroadcastHistory': {'broadcastIds': None,
-                              'error': None,
-                              'failed': [],
-                              'pending': []},
-     'UserBroadcastHistoryCache': {'histories': {}},
-     'VideoPlayer': {'appAvailable': False,
-                     'audio': 'OFF',
-                     'autoplay': False,
-                     'cinema': False,
-                     'dimensions': {'height': 0, 'width': 0},
-                     'includeVideoUI': False,
-                     'isAutoplay': False,
-                     'isCinemaPlayer': False,
-                     'isConnected': False,
-                     'isConnecting': False,
-                     'isExpectingVideo': False,
-                     'isInterstitialPresentation': True,
-                     'isLiveMode': False,
-                     'isLoadingVideo': False,
-                     'isPaused': False,
-                     'isPlayback': False,
-                     'isPlaying': False,
-                     'isReplayMode': False,
-                     'isStalled': False,
-                     'isStopped': True,
-                     'isStoppedInterstitial': True,
-                     'isUnknownMode': True,
-                     'isVideoPresentation': False,
-                     'muted': True,
-                     'orientation': 0,
-                     'playbackSupported': False,
-                     'playerBackgroundReady': False,
-                     'playerIsUnavailable': False,
-                     'playerMode': 'UNKNOWN',
-                     'playerState': 'STOPPED',
-                     'presentation': 'INTERSTITIAL',
-                     'requestedTimecode': -1,
-                     'timecodePresent': False,
-                     'unmuted': False,
-                     'videoHasStarted': False},
-     'routing': {}}
-
-The structure and actual data returned by this method will vary wildly
-depending on the requested URL.
-
-
 create_user_url(self, user_id=None, username=None)
 --------------------------------------------------
 
@@ -358,19 +256,6 @@ Example usage::
 
     >>> pp.parse_periscope_url('https://www.periscope.tv/w/1eaKbRMEMEQKX')
     {'broadcast_id': '1eaKbRMEMEQKX', 'username': None, 'user_id': None}
-
-
-create_api_request_url(endpoint, **params)
-------------------------------------------
-
-Craft a URL to the Periscope API with the supplied endpoint and params.
-
-The params will be added to URL in a consistent, alphabetical order.
-
-Example usage::
-
-    >>> pp.create_api_request_url('getUserPublic', user_id='123456', a='b')
-    'https://api.periscope.tv/api/v2/getUserPublic?a=b&user_id=123456'
 
 
 request_api(endpoint, **params)
