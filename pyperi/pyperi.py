@@ -14,25 +14,10 @@ class Peri(object):
         """
         Make a request against the Periscope API and return the result.
         """
-        url = self.create_api_request_url(endpoint, **params)
+        url = self._create_api_request_url(endpoint, **params)
         r = requests.get(url)
         r.raise_for_status()
         return r.json()
-
-    def create_api_request_url(self, endpoint, **params):
-        """
-        Craft a URL to the Periscope API with the supplied endpoint and params.
-        """
-        # For easier testing, make sure all params are always in a consistent
-        # order.
-        params_ordered = OrderedDict(sorted(params.items()))
-
-        url = '{base_url}/{endpoint}?{params}'.format(
-            base_url=Peri.PERISCOPE_API_BASE_URL,
-            endpoint=endpoint,
-            params=urllib.parse.urlencode(params_ordered),
-        )
-        return url
 
     def get_broadcast_info(self, broadcast_id):
         """
@@ -67,19 +52,6 @@ class Peri(object):
         response = self.request_api(endpoint, **params)
         return response['broadcasts']
 
-    def get_web_data_store(self, url):
-        """
-        Retrieve and return the 'data-store' HTML data attribute from the
-        given URL as a Dict.
-        """
-        r = requests.get(url)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.content, 'html.parser')
-        page_container = soup.find(id='page-container')
-        data_store = json.loads(page_container['data-store'])
-        return data_store
-
     def get_web_public_user_session_tokens(self, user_id=None, username=None):
         """
         Request new Public Session Tokens to access endpoints relating to a
@@ -95,7 +67,7 @@ class Peri(object):
         """
         user_url = self.create_user_url(user_id=user_id, username=username)
 
-        data_store = self.get_web_data_store(user_url)
+        data_store = self._get_web_data_store(user_url)
         public_tokens = data_store['SessionToken']['public']
 
         token_names = [
@@ -108,7 +80,8 @@ class Peri(object):
 
         return out
 
-    def create_user_url(self, user_id=None, username=None):
+    @classmethod
+    def create_user_url(cls, user_id=None, username=None):
         """
         Create the URL to a User's Periscope page.
         """
@@ -125,7 +98,8 @@ class Peri(object):
 
         raise ValueError('Must specify either user_id or username')
 
-    def parse_periscope_url(self, url):
+    @classmethod
+    def parse_periscope_url(cls, url):
         """
         Get any key information available from the supplied URL.
 
@@ -137,10 +111,10 @@ class Peri(object):
         """
 
         url_parsers = [
-            self.parse_periscope_w_url,
-            self.parse_periscope_u_url,
-            self.parse_periscope_username_broadcast_id_url,
-            self.parse_periscope_username_url,
+            cls._parse_periscope_w_url,
+            cls._parse_periscope_u_url,
+            cls._parse_periscope_username_broadcast_id_url,
+            cls._parse_periscope_username_url,
         ]
 
         out = {
@@ -156,7 +130,37 @@ class Peri(object):
 
         return out
 
-    def parse_periscope_w_url(self, url):
+    def _get_web_data_store(self, url):
+        """
+        Retrieve and return the 'data-store' HTML data attribute from the
+        given URL as a Dict.
+        """
+        r = requests.get(url)
+        r.raise_for_status()
+
+        soup = BeautifulSoup(r.content, 'html.parser')
+        page_container = soup.find(id='page-container')
+        data_store = json.loads(page_container['data-store'])
+        return data_store
+
+    @classmethod
+    def _create_api_request_url(cls, endpoint, **params):
+        """
+        Craft a URL to the Periscope API with the supplied endpoint and params.
+        """
+        # For easier testing, make sure all params are always in a consistent
+        # order.
+        params_ordered = OrderedDict(sorted(params.items()))
+
+        url = '{base_url}/{endpoint}?{params}'.format(
+            base_url=cls.PERISCOPE_API_BASE_URL,
+            endpoint=endpoint,
+            params=urllib.parse.urlencode(params_ordered),
+        )
+        return url
+
+    @classmethod
+    def _parse_periscope_w_url(cls, url):
         """
         Retrieve the `broadcast_id` from the supplied "/w/" URL.
 
@@ -182,7 +186,8 @@ class Peri(object):
             out['broadcast_id'] = broadcast_id
         return out
 
-    def parse_periscope_username_url(self, url):
+    @classmethod
+    def _parse_periscope_username_url(cls, url):
         """
         Extracts the username from URLs formatted like this:
 
@@ -205,7 +210,8 @@ class Peri(object):
             out['username'] = username
         return out
 
-    def parse_periscope_username_broadcast_id_url(self, url):
+    @classmethod
+    def _parse_periscope_username_broadcast_id_url(cls, url):
         """
         Extract the `username`and `broadcast_id` from URLs formatted like this:
 
@@ -230,7 +236,8 @@ class Peri(object):
             out['broadcast_id'] = broadcast_id
         return out
 
-    def parse_periscope_u_url(self, url):
+    @classmethod
+    def _parse_periscope_u_url(cls, url):
         """
         Retrieve the `user_id` from the supplied "/u/" URL.
 
