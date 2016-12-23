@@ -10,6 +10,7 @@ To use PyPeri in a project::
     >>> from pyperi import Peri
     >>> pp = Peri()
     >>> user_info = pp.get_user_info('376827')
+    >>> print(user_info['username'])
     george_clinton
 
 
@@ -258,8 +259,8 @@ Example usage::
     {'broadcast_id': '1eaKbRMEMEQKX', 'username': None, 'user_id': None}
 
 
-request_api(endpoint, **params)
--------------------------------
+request_api(endpoint, \*\*params)
+---------------------------------
 
 Makes a request to the Periscope API, with the supplied params and returns
 the result as a Dict.
