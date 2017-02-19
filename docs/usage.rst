@@ -55,6 +55,14 @@ Example usage::
      'twitter_screen_name': 'george_clinton',
      'username': 'george_clinton'}
 
+If the User doesn't exist, then will return `None`::
+
+    >>> pp.get_user_info('156816811')
+    None
+
+Be aware that Periscope expects `user_id` to be an Integer, anything else will result in a 400
+HTTP error.
+
 
 get_broadcast_info(broadcast_id)
 --------------------------------
@@ -103,6 +111,11 @@ Example usage::
      'user_id': '376827',
      'username': 'george_clinton',
      'width': 320}
+
+If the requested Broadcast does not exist, then will return `None`::
+
+    >>> pp.get_broadcast_info('aAaAAaaaAAAA')
+    None
 
 
 get_user_broadcast_history(user_id=None, username=None)
@@ -193,6 +206,11 @@ Example usage::
         'width': 320}
     ]
 
+If the requested User does not exist, then will return `None`::
+
+    >>> pp.get_user_broadcast_history(username='some_bad_username')
+    None
+
 
 get_web_public_user_session_tokens(user_id=None, username=None)
 ---------------------------------------------------------------
@@ -223,6 +241,11 @@ Example usage::
         'thumbnailPlaylist': '1B4NxFGPCQH1IunHtK5cRWOkkbifgOK7Ipsx8uC9k_WfKC6m1AU6MpnC5cKzxivdnJHC4ngY0EespKKzOzSTn49woz56N9YIuyNkl3Ao977oeC-uvY_xrxXW5',
         'user_id': '376827'
     }
+
+If the requested User does not exist, then will return `None`::
+
+    >>> pp.get_web_public_user_session_tokens(username='some_non_existant_user')
+    None
 
 
 create_user_url(self, user_id=None, username=None)
@@ -295,3 +318,9 @@ Example usage::
      'twitter_id': '23177270',
      'twitter_screen_name': 'george_clinton',
      'username': 'george_clinton'}
+
+It's common for a User or Broadcast to not be found. So any responses from Periscope with a 404
+status code are handled by simply returning `None` from this method::
+
+    >>> pp.request_api('getUserPublic', user_id='6666666666')
+    None
