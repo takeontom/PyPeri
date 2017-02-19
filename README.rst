@@ -77,7 +77,8 @@ Do stuff::
     >>> from pyperi import Peri
     >>> pp = Peri()
     >>> history = pp.get_user_broadcast_history(username='george_clinton')
-    >>> print(history[0]['status'])
+    >>> if history:
+    ...     print(history[0]['status'])
     #George Clinton listening to music in houston
 
 Full documentation is available here: https://pyperi.readthedocs.io
