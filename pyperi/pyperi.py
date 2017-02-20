@@ -6,6 +6,13 @@ from bs4 import BeautifulSoup
 import json
 
 
+class PyPeriConnectionError(requests.exceptions.ConnectionError):
+    """
+    Raised when unable to connect.
+    """
+    pass
+
+
 class Peri(object):
     PERISCOPE_API_BASE_URL = 'https://api.periscope.tv/api/v2'
     PERISCOPE_WEB_BASE_URL = 'https://www.periscope.tv'
@@ -13,10 +20,23 @@ class Peri(object):
     def request_api(self, endpoint, **params):
         """
         Make a request against the Periscope API and return the result.
+
+        If a 404 is encountered (e.g. when a Broadcast no longer exists), then
+        this will return None.
         """
         url = self._create_api_request_url(endpoint, **params)
-        r = requests.get(url)
-        r.raise_for_status()
+
+        try:
+            r = requests.get(url)
+        except requests.exceptions.ConnectionError as e:
+            raise PyPeriConnectionError(e)
+
+        try:
+            r.raise_for_status()
+        except requests.exceptions.HTTPError as e:
+            status_code = e.response.status_code
+            if status_code == 404:
+                return None
         return r.json()
 
     def get_broadcast_info(self, broadcast_id):
@@ -24,26 +44,47 @@ class Peri(object):
         Retrieve a dict of information about a specific Broadcast.
 
         Uses Periscope's `accessVideoPublic` API endpoint.
+
+        If the broadcast doesn't exist, will return None.
         """
         endpoint = 'accessVideoPublic'
         result = self.request_api(endpoint, broadcast_id=broadcast_id)
+        if not result:
+            return None
         return result['broadcast']
 
     def get_user_info(self, user_id):
         """
-        Retrieve a dict of information about a specific User.
+        Retrieve a Dict of information about a specific User.
 
         Uses Periscope's `getUserPublic` API endpoint.
+
+        If the User is not found, then will return None.
         """
         endpoint = 'getUserPublic'
         result = self.request_api(endpoint, user_id=user_id)
+        if not result:
+            return None
         return result['user']
 
     def get_user_broadcast_history(self, user_id=None, username=None):
+        """
+        Retrieve a Dict of information about the specified User's Broadcast
+        History.
+
+        Uses Periscope's `getUserBroadcastsPublic` API endpoint, and will
+        automatically attempt to get a valid session token to access.
+
+        If the User doesn't exist, then will return None.
+        """
         endpoint = 'getUserBroadcastsPublic'
         session_tokens = self.get_web_public_user_session_tokens(
             user_id, username
         )
+        if not session_tokens:
+            # User didn't exist
+            return None
+
         params = {
             'user_id': session_tokens['user_id'],
             'session_id': session_tokens['broadcastHistory'],
@@ -64,10 +105,16 @@ class Peri(object):
             * thumbnailPlaylist
 
         The returned Dict will also contain the requested User's 'user_id'.
+
+        If the specified User does not exist, then will return None.
         """
         user_url = self.create_user_url(user_id=user_id, username=username)
 
         data_store = self._get_web_data_store(user_url)
+        if not data_store:
+            # User doesn't exist
+            return None
+
         public_tokens = data_store['SessionToken']['public']
 
         token_names = [
@@ -134,9 +181,24 @@ class Peri(object):
         """
         Retrieve and return the 'data-store' HTML data attribute from the
         given URL as a Dict.
+
+        If the Periscope User or Broadcast does not exist, then this will
+        return None.
         """
-        r = requests.get(url)
-        r.raise_for_status()
+        try:
+            r = requests.get(url)
+        except requests.exceptions.ConnectionError as e:
+            raise PyPeriConnectionError(e)
+
+        try:
+            r.raise_for_status()
+        except requests.exceptions.HTTPError as e:
+            # Handle 404s...
+            if e.response.status_code == 404:
+                return None
+
+            # ... and bubble up everything else.
+            raise e
 
         soup = BeautifulSoup(r.content, 'html.parser')
         page_container = soup.find(id='page-container')
