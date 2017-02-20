@@ -21,8 +21,8 @@ class Peri(object):
         """
         Make a request against the Periscope API and return the result.
 
-        If a 404 is encountered (e.g. when a Broadcast no longer exists), then this will return
-        None.
+        If a 404 is encountered (e.g. when a Broadcast no longer exists), then
+        this will return None.
         """
         url = self._create_api_request_url(endpoint, **params)
 
@@ -65,15 +65,15 @@ class Peri(object):
         result = self.request_api(endpoint, user_id=user_id)
         if not result:
             return None
-        print(result)
         return result['user']
 
     def get_user_broadcast_history(self, user_id=None, username=None):
         """
-        Retrieve a Dict of information about the specified User's Broadcast History.
+        Retrieve a Dict of information about the specified User's Broadcast
+        History.
 
-        Uses Periscope's `getUserBroadcastsPublic` API endpoint, and will automatically attempt to
-        get a valid session token to access.
+        Uses Periscope's `getUserBroadcastsPublic` API endpoint, and will
+        automatically attempt to get a valid session token to access.
 
         If the User doesn't exist, then will return None.
         """
@@ -182,8 +182,8 @@ class Peri(object):
         Retrieve and return the 'data-store' HTML data attribute from the
         given URL as a Dict.
 
-        If the Periscope User or Broadcast does not exist, then this will return
-        None.
+        If the Periscope User or Broadcast does not exist, then this will
+        return None.
         """
         try:
             r = requests.get(url)
