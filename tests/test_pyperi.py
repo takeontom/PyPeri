@@ -8,10 +8,12 @@ test_pyperi
 Tests for `pyperi` module.
 """
 
+import requests
 import httpretty
 import pytest  # noqa
+from unittest import mock
 
-from pyperi import Peri
+from pyperi import Peri, PyPeriConnectionError
 
 
 @httpretty.activate
@@ -43,6 +45,17 @@ def test_request_api__not_founds():
         'testEndpoint', test_param='something', test_param2='else'
     )
     assert result is None
+
+
+@mock.patch('pyperi.pyperi.requests.get')
+def test_request_api__unable_to_connect(mock_get):
+    mock_get.side_effect = requests.exceptions.ConnectionError()
+    pp = Peri()
+
+    with pytest.raises(PyPeriConnectionError):
+        pp.request_api(
+            'testEndpoint', test_param='something', test_param2='else'
+        )
 
 
 def test_create_api_request_url():
@@ -283,6 +296,15 @@ def test_get_web_data_store():
 
     # Check we can get the user ID
     assert data_store['Tracking']['userId'] == '376827'
+
+
+@mock.patch('pyperi.pyperi.requests.get')
+def test_get_web_data_store__connection_error(mock_get):
+    mock_get.side_effect = requests.exceptions.ConnectionError()
+    url = ('https://www.periscope.tv/george_clinton')
+    pp = Peri()
+    with pytest.raises(PyPeriConnectionError):
+        pp._get_web_data_store(url)
 
 
 @httpretty.activate

@@ -6,6 +6,13 @@ from bs4 import BeautifulSoup
 import json
 
 
+class PyPeriConnectionError(requests.exceptions.ConnectionError):
+    """
+    Raised when unable to connect.
+    """
+    pass
+
+
 class Peri(object):
     PERISCOPE_API_BASE_URL = 'https://api.periscope.tv/api/v2'
     PERISCOPE_WEB_BASE_URL = 'https://www.periscope.tv'
@@ -18,7 +25,11 @@ class Peri(object):
         None.
         """
         url = self._create_api_request_url(endpoint, **params)
-        r = requests.get(url)
+
+        try:
+            r = requests.get(url)
+        except requests.exceptions.ConnectionError as e:
+            raise PyPeriConnectionError(e)
 
         try:
             r.raise_for_status()
@@ -174,7 +185,11 @@ class Peri(object):
         If the Periscope User or Broadcast does not exist, then this will return
         None.
         """
-        r = requests.get(url)
+        try:
+            r = requests.get(url)
+        except requests.exceptions.ConnectionError as e:
+            raise PyPeriConnectionError(e)
+
         try:
             r.raise_for_status()
         except requests.exceptions.HTTPError as e:
