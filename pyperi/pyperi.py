@@ -121,7 +121,7 @@ class Peri(object):
             'broadcastHistory', 'serviceToken', 'thumbnailPlaylist'
         ]
 
-        out = {'user_id': data_store['Tracking']['userId']}
+        out = {'user_id': data_store['UserCache']['usernames'][username.lower()]}
         for token_name in token_names:
             out[token_name] = public_tokens[token_name]['token']['session_id']
 
