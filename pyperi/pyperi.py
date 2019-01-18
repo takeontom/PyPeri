@@ -17,6 +17,14 @@ class Peri(object):
     PERISCOPE_API_BASE_URL = 'https://api.periscope.tv/api/v2'
     PERISCOPE_WEB_BASE_URL = 'https://www.periscope.tv'
 
+    def __init__(self, session=None):
+        """
+        Constructor.  If a `session` is passed, it will be used to retrieve
+        URLs.  This should be a `requests.Session` object, or something like it.
+        If no `session` is passed, one will be created for you.
+        """
+        self.session = session if session else requests.Session()
+
     def request_api(self, endpoint, **params):
         """
         Make a request against the Periscope API and return the result.
@@ -27,7 +35,7 @@ class Peri(object):
         url = self._create_api_request_url(endpoint, **params)
 
         try:
-            r = requests.get(url)
+            r = self.session.get(url)
         except requests.exceptions.ConnectionError as e:
             raise PyPeriConnectionError(e)
 
@@ -121,7 +129,7 @@ class Peri(object):
             'broadcastHistory', 'serviceToken', 'thumbnailPlaylist'
         ]
 
-        out = {'user_id': data_store['Tracking']['userId']}
+        out = {'user_id': data_store['UserCache']['usernames'][username.lower()]}
         for token_name in token_names:
             out[token_name] = public_tokens[token_name]['token']['session_id']
 
@@ -186,7 +194,7 @@ class Peri(object):
         return None.
         """
         try:
-            r = requests.get(url)
+            r = self.session.get(url)
         except requests.exceptions.ConnectionError as e:
             raise PyPeriConnectionError(e)
 
